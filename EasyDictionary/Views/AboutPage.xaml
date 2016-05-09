@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="EasyDictionary.Views.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyDictionary.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="spInner">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" x:Uid="AboutPageTitle" Text="About" Style="{StaticResource HeaderTextBlockStyle}" Margin="32, 32, 32, 0" Foreground="#FF8C00"></TextBlock>
+            <Grid Margin="32" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding ApplicationVersion}"></TextBlock>
+                    <TextBlock Text="{Binding CopyRight}"></TextBlock>
+                    <TextBlock Text="Description" x:Uid="AboutDescription" Margin="0,12,0,0"></TextBlock>
+                    <HyperlinkButton NavigateUri="{Binding RepositoryUri}" x:Uid="AboutRepositoryButton" Margin="0,24,0,0">Repository</HyperlinkButton>
+                    <HyperlinkButton NavigateUri="{Binding TermsOfUseUri}" x:Uid="AboutTermsOfUseButton">Terms of Use</HyperlinkButton>
+                    <HyperlinkButton NavigateUri="{Binding TermsOfUseUri}" x:Uid="AboutPrivacyStatementButton">Privacy Statement</HyperlinkButton>
+                    <TextBlock x:Uid="AboutDevelopersSection" Text="Developers:" Margin="0,24,0,0"></TextBlock>
+                    <ListView ItemsSource="{Binding FeatureDevelopers}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Key}"></TextBlock>
+                                    <TextBlock Text="-" Margin="12,0,12,0"></TextBlock>
+                                    <TextBlock Text="{Binding Value}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
