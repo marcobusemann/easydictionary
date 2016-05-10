@@ -1,6 +1,8 @@
 # Easy Dictionary (Windows 10 (UWP) App)
 Windows Store: [https://www.microsoft.com/store/apps/9nblgggz62rk](https://www.microsoft.com/store/apps/9nblgggz62rk)
 
+![Translation](https://raw.githubusercontent.com/marcobusemann/easydictionary/master/Screenshots/translation.png)
+
 # Introduction
 This app povides simple word translations using the well known service [http://dict.cc](http://dict.cc).  The app is held clean and simple to just serve this one feature.
 
