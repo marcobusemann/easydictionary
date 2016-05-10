@@ -118,7 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutDescription.Text" xml:space="preserve">
-    <value>Meine Beschreibung</value>
+    <value>Diese App ermöglicht eine einfache Wort-Übersetzung über den bekannten Dienst http://dict.cc. Durch ein einfaches Design und klare Bedienung fokussiert sie sich auf diese eine Aufgabe. 
+
+Diese App ist open-source, wodurch Entwickler selbst neue Features oder Verbesserungen hinzufügen können. </value>
   </data>
   <data name="AboutDevelopersSection.Text" xml:space="preserve">
     <value>Beteiligte Entwickler:</value>
@@ -136,7 +138,9 @@
     <value>Nutzungsbedingungen</value>
   </data>
   <data name="ApplicationDescription" xml:space="preserve">
-    <value>Meine Beschreibung</value>
+    <value>Diese App ermöglicht eine einfache Wort-Übersetzung über den bekannten Dienst http://dict.cc. Durch ein einfaches Design und klare Bedienung fokussiert sie sich auf diese eine Aufgabe. 
+
+Diese App ist open-source, wodurch Entwickler selbst neue Features oder Verbesserungen hinzufügen können.</value>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Easy Dictionary</value>

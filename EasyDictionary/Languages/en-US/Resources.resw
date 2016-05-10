@@ -118,7 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutDescription.Text" xml:space="preserve">
-    <value>MyDescription</value>
+    <value>This app povides simple word translations using the well known service http://dict.cc. 
+The app is held clean and simple to just serve this one feature.
+
+From time to time i got feature request but had no time to implement them. By making this app open-source, i will give people the 
+change to implement features by themselves.</value>
   </data>
   <data name="AboutDevelopersSection.Text" xml:space="preserve">
     <value>Involved developers:</value>
@@ -136,7 +140,11 @@
     <value>Terms of Use</value>
   </data>
   <data name="ApplicationDescription" xml:space="preserve">
-    <value>My Description</value>
+    <value>This app povides simple word translations using the well known service http://dict.cc. 
+The app is held clean and simple to just serve this one feature.
+
+From time to time i got feature request but had no time to implement them. By making this app open-source, i will give people the 
+change to implement features by themselves.</value>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Easy Dictionary</value>
