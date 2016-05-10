@@ -19,7 +19,7 @@ The app has been created using:
 - Microsoft Visual Studio Community 2015
   - Version 14.0.25123.00 Update 2
 
-- Visual Studio Tools f�r Universelle Windows-Apps 14.0.25208.00
+- Visual Studio Tools for Universelle Windows-Apps 14.0.25208.00
 
 # ThirdParty
 - Navigation: [SplitViewMenu](https://github.com/deanchalk/SplitViewMenuUWP/tree/master/SplitViewMenuUWP)
