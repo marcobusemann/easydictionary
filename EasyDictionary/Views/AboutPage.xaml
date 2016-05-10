@@ -24,7 +24,7 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="{Binding ApplicationVersion}"></TextBlock>
                     <TextBlock Text="{Binding CopyRight}"></TextBlock>
-                    <TextBlock Text="Description" x:Uid="AboutDescription" Margin="0,12,0,0"></TextBlock>
+                    <TextBlock Text="Description" x:Uid="AboutDescription" Margin="0,12,0,0" TextWrapping="Wrap" ></TextBlock>
                     <HyperlinkButton NavigateUri="{Binding RepositoryUri}" x:Uid="AboutRepositoryButton" Margin="0,24,0,0">Repository</HyperlinkButton>
                     <HyperlinkButton NavigateUri="{Binding TermsOfUseUri}" x:Uid="AboutTermsOfUseButton">Terms of Use</HyperlinkButton>
                     <HyperlinkButton NavigateUri="{Binding TermsOfUseUri}" x:Uid="AboutPrivacyStatementButton">Privacy Statement</HyperlinkButton>

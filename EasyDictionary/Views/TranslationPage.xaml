@@ -49,7 +49,7 @@
                 </Grid.RowDefinitions>
 
                 <RelativePanel>
-                    <TextBlock x:Uid="Search" Text="Search:" Foreground="#FF8C00" x:Name="tbSearchText"/>
+                    <TextBlock x:Uid="Search" Text="Search:" Foreground="#FF8C00" x:Name="tbSearchText" Margin="0,4,0,0"/>
                     <TextBox x:Name="tbSearch" MinWidth="200" Margin="10,0,0,0"
                         Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         RelativePanel.RightOf="tbSearchText"></TextBox>

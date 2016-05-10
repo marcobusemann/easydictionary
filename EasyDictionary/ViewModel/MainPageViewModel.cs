@@ -16,6 +16,7 @@ namespace EasyDictionary.ViewModel
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
+        // See http://blog.codeinside.eu/2016/01/31/working-with-fonticons-in-uwp/
         const String FontAwesome = @"ms-appx:///Assets/FontAwesome.otf#FontAwesome";
 
         private Type _initialPage = typeof(TranslationPage);
@@ -57,6 +58,7 @@ namespace EasyDictionary.ViewModel
         public MainPageViewModel()
         {
             var rl = new ResourceLoader();
+
             _menuItems = new List<INavigationMenuItem>()
             {
                 new SimpleNavMenuItem()
@@ -64,7 +66,7 @@ namespace EasyDictionary.ViewModel
                     DestinationPage = typeof(TranslationPage),
                     Label = rl.GetString("PageTitleTranslate"),
                     FontFamily = FontAwesome,
-                    Symbol = "\uf0ac"
+                    Symbol = "\uf002"
                 }
             };
 

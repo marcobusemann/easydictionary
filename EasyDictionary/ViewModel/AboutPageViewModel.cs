@@ -11,9 +11,9 @@ namespace EasyDictionary.ViewModel
 {
     public class AboutPageViewModel : INotifyPropertyChanged
     {
-        public Uri RepositoryUri { get { return new Uri("http://google.de"); } }
-        public Uri TermsOfUseUri { get { return new Uri("http://google.de"); } }
-        public Uri PrivacyUri { get { return new Uri("http://google.de"); } }
+        public Uri RepositoryUri { get { return new Uri("https://github.com/marcobusemann/easydictionary"); } }
+        public Uri TermsOfUseUri { get { return new Uri("https://github.com/marcobusemann/easydictionary/blob/master/TERMSOFUSE"); } }
+        public Uri PrivacyUri { get { return new Uri("https://github.com/marcobusemann/easydictionary/blob/master/PRIVACYPOLICY"); } }
 
         public String Version { get; } = BuildVersionString();
         public String ApplicationName { get; } = BuildApplicationName();
@@ -31,7 +31,7 @@ namespace EasyDictionary.ViewModel
             _copyRight = String.Format("© {0} Marco Busemann", DateTime.Now.Year);
             _featureDevelopers = new List<KeyValuePair<String, String>>()
             {
-                new KeyValuePair<string, string>("Core app", "Marco Busemann")
+                new KeyValuePair<string, string>("Core application", "Marco Busemann")
             };
         }
 
