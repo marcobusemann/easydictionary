@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.Storage;
 
 namespace EasyDictionary.ViewModel
 {
@@ -30,6 +31,10 @@ namespace EasyDictionary.ViewModel
 
     public class TranslationViewModel: INotifyPropertyChanged
     {
+        const String SETTING_LASTLANGUAGEOPTION = "lastlanguageoption";
+        const String SETTING_LASTLANGUAGEOPTION_DEST = "dest";
+        const String SETTING_LASTLANGUAGEOPTION_SRC = "src";
+
         #region events
         public EventHandler<String> SearchStringChanged;
         public EventHandler<TranslationLanguageOption> TranslationOptionChanged;
@@ -75,6 +80,7 @@ namespace EasyDictionary.ViewModel
                 _selectedTranslationOption = value;
                 Exception = null;
                 NotifyPropertyChanged();
+                SaveLastTranslationOption(_selectedTranslationOption);
                 if (TranslationOptionChanged != null)
                     TranslationOptionChanged(this, _selectedTranslationOption);
             }
@@ -163,8 +169,37 @@ namespace EasyDictionary.ViewModel
             await EmbeddExceptionHandlingAsync(async () =>
             {
                 TranslationOptions = await _translationService.LoadTranslationOptions();
-                SelectedTranslationOption = TranslationOptions.First();
+                SelectedTranslationOption = LoadLastTranslationOption(TranslationOptions) ?? TranslationOptions.First();
             });
+        }
+
+        private TranslationLanguageOption LoadLastTranslationOption(IEnumerable<TranslationLanguageOption> options)
+        {
+            TranslationLanguageOption result = null;
+            ApplicationDataContainer AppSettings = ApplicationData.Current.RoamingSettings;
+            var values = AppSettings.Values;
+
+            if (values.ContainsKey(SETTING_LASTLANGUAGEOPTION))
+            {
+                var value = values[SETTING_LASTLANGUAGEOPTION] as ApplicationDataCompositeValue;
+
+                result = options.Where(o =>
+                    o.Destination.LanguageTag == value[SETTING_LASTLANGUAGEOPTION_DEST] as String &&
+                    o.Source.LanguageTag == value[SETTING_LASTLANGUAGEOPTION_SRC] as String).FirstOrDefault();
+            }
+
+            return result;
+        }
+
+        private void SaveLastTranslationOption(TranslationLanguageOption option)
+        {
+            ApplicationDataContainer AppSettings = ApplicationData.Current.RoamingSettings;
+
+            var composite = new ApplicationDataCompositeValue();
+            composite[SETTING_LASTLANGUAGEOPTION_SRC] = option.Source.LanguageTag;
+            composite[SETTING_LASTLANGUAGEOPTION_DEST] = option.Destination.LanguageTag;
+
+            AppSettings.Values[SETTING_LASTLANGUAGEOPTION] = composite;
         }
 
         private async Task Translate()
