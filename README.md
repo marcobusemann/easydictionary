@@ -4,7 +4,7 @@ Windows Store: [https://www.microsoft.com/store/apps/9nblgggz62rk](https://www.m
 # Introduction
 This app povides simple word translations using the well known service [http://dict.cc](http://dict.cc).  The app is held clean and simple to just serve this one feature.
 
-From time to time i got feature request but had no time to implement them. By making this app open-source, i will give people the  change to implement features by themselves.
+From time to time i got feature request but had no time to implement them. By making this app open-source, i will give people the possibility to implement features by themselves.
 
 # Features
 - Clean and simple

@@ -122,7 +122,7 @@
 The app is held clean and simple to just serve this one feature.
 
 From time to time i got feature request but had no time to implement them. By making this app open-source, i will give people the 
-change to implement features by themselves.</value>
+possibility to implement features by themselves.</value>
   </data>
   <data name="AboutDevelopersSection.Text" xml:space="preserve">
     <value>Involved developers:</value>
@@ -144,7 +144,7 @@ change to implement features by themselves.</value>
 The app is held clean and simple to just serve this one feature.
 
 From time to time i got feature request but had no time to implement them. By making this app open-source, i will give people the 
-change to implement features by themselves.</value>
+possibility to implement features by themselves.</value>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Easy Dictionary</value>
