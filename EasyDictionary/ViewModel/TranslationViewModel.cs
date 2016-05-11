@@ -2,6 +2,7 @@
 using EasyDictionary.Exceptions;
 using EasyDictionary.Services;
 using EasyDictionary.ViewModel;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,8 +13,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
+using Windows.UI.Xaml.Input;
 
 namespace EasyDictionary.ViewModel
 {
@@ -83,6 +87,7 @@ namespace EasyDictionary.ViewModel
                 SaveLastTranslationOption(_selectedTranslationOption);
                 if (TranslationOptionChanged != null)
                     TranslationOptionChanged(this, _selectedTranslationOption);
+                FocusSearchBox();
             }
         }
 
@@ -126,7 +131,29 @@ namespace EasyDictionary.ViewModel
                 return _exception != null;
             }
         }
+
+        private bool _searchBoxHasFocus = false;
+        public bool SearchBoxHasFocus
+        {
+            get { return _searchBoxHasFocus; }
+            set
+            {
+                _searchBoxHasFocus = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ICommand CopyToClipboardCommand { get; private set; }
+        public ICommand InitializeCommand { get; private set; }
         #endregion
+
+        private void CopyToClipboard(String value)
+        {
+            DataPackage p = new DataPackage();
+            p.SetText(value);
+            Clipboard.SetContent(p);
+            Clipboard.Flush();
+        }
 
         public TranslationViewModel(ITranslationService translationService)
         {
@@ -135,6 +162,13 @@ namespace EasyDictionary.ViewModel
             TranslationOptionChanged += async (o, e) => await Translate();
 
             SetupDelayedSearch();
+
+            InitializeCommand = new RelayCommand(async () => await Initialize(), () => true);
+            CopyToClipboardCommand = new RelayCommand<String>(async (v) => {
+                CopyToClipboard(v);
+                await Task.Delay(500);
+                FocusSearchBox();
+            }, (v) => true);
         }
 
         private void SetupDelayedSearch()
@@ -170,7 +204,14 @@ namespace EasyDictionary.ViewModel
             {
                 TranslationOptions = await _translationService.LoadTranslationOptions();
                 SelectedTranslationOption = LoadLastTranslationOption(TranslationOptions) ?? TranslationOptions.First();
+                FocusSearchBox();
             });
+        }
+
+        private void FocusSearchBox()
+        {
+            SearchBoxHasFocus = false;
+            SearchBoxHasFocus = true;
         }
 
         private TranslationLanguageOption LoadLastTranslationOption(IEnumerable<TranslationLanguageOption> options)
@@ -193,6 +234,8 @@ namespace EasyDictionary.ViewModel
 
         private void SaveLastTranslationOption(TranslationLanguageOption option)
         {
+            if (option == null) return;
+
             ApplicationDataContainer AppSettings = ApplicationData.Current.RoamingSettings;
 
             var composite = new ApplicationDataCompositeValue();

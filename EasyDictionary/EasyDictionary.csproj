@@ -101,12 +101,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Exceptions\Exceptions.cs" />
+    <Compile Include="Extensions\FocusExtension.cs" />
     <Compile Include="Services\DictCCTranslationService.cs" />
     <Compile Include="Services\ITranslationService.cs" />
     <Compile Include="Domain\TranslationLanguageOption.cs" />
     <Compile Include="Domain\Translation.cs" />
     <Compile Include="Domain\TranslationRequest.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

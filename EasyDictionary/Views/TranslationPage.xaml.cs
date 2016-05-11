@@ -24,31 +24,9 @@ namespace EasyDictionary.Views
     /// </summary>
     public sealed partial class TranslationPage : Page
     {
-        TranslationViewModel _viewModel;
-
         public TranslationPage()
         {
             this.InitializeComponent();
-            DataContext = _viewModel = new TranslationViewModel(new DictCCTranslationService());
-        }
-
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            // TODO: Refactor to be MVVM compliant
-            await _viewModel.Initialize();
-        }
-
-        // TODO: Refactor to be MVVM compliant
-        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
-        }
-
-        // TODO: Refactor to be MVVM compliant
-        private void StackPanel_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
     }
 }

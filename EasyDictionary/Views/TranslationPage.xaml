@@ -6,7 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:EasyDictionary.Converter"
-    mc:Ignorable="d">
+    xmlns:extensions="using:EasyDictionary.Extensions"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Behaviors="using:EasyDictionary.Behaviors"
+    mc:Ignorable="d"
+    DataContext="{Binding Translation, Source={StaticResource Locator}}">
+
+    <Interactivity:Interaction.Behaviors>
+        <Core:EventTriggerBehavior EventName="Loaded">
+            <Core:InvokeCommandAction Command="{Binding Translation.InitializeCommand, Source={StaticResource Locator}}" />
+        </Core:EventTriggerBehavior>
+    </Interactivity:Interaction.Behaviors>
 
     <Page.Resources>
         <ResourceDictionary>
@@ -14,33 +25,49 @@
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibileConverter" />
 
             <MenuFlyout x:Key="ContextMenuTemplate">
-                <MenuFlyoutItem Text="{Binding Source, Converter={StaticResource copyTextConverter}}" Command="{Binding CopySourceToClipboardCommand}"/>
-                <MenuFlyoutItem Text="{Binding Destination, Converter={StaticResource copyTextConverter}}" Command="{Binding CopyDestinationToClipboardCommand}"/>
+                <MenuFlyoutItem Text="{Binding Source, Converter={StaticResource copyTextConverter}}" Command="{Binding Translation.CopyToClipboardCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Source}" />
+                <MenuFlyoutItem Text="{Binding Destination, Converter={StaticResource copyTextConverter}}" Command="{Binding Translation.CopyToClipboardCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Destination}" />
             </MenuFlyout>
 
             <DataTemplate x:Key="TranslationListTemplate">
-                <StackPanel Orientation="Vertical" FlyoutBase.AttachedFlyout="{StaticResource ContextMenuTemplate}" Tapped="StackPanel_Tapped" RightTapped="StackPanel_RightTapped">
+                <StackPanel Orientation="Vertical" FlyoutBase.AttachedFlyout="{StaticResource ContextMenuTemplate}" >
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="RightTapped">
+                            <Behaviors:OpenFlyoutAction />
+                        </Core:EventTriggerBehavior>
+                        <Core:EventTriggerBehavior EventName="Tapped">
+                            <Behaviors:OpenFlyoutAction />
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
                     <TextBlock Text="{Binding Source}" FontWeight="Bold"></TextBlock>
                     <TextBlock Text="{Binding Destination}" FontStyle="Italic"></TextBlock>
                 </StackPanel>
             </DataTemplate>
 
             <DataTemplate x:Key="TranslationGridTemplate">
-                <StackPanel Orientation="Vertical" MinWidth="200" Margin="4" FlyoutBase.AttachedFlyout="{StaticResource ContextMenuTemplate}" Tapped="StackPanel_Tapped" RightTapped="StackPanel_RightTapped">
+                <StackPanel Orientation="Vertical" MinWidth="200" Margin="4" FlyoutBase.AttachedFlyout="{StaticResource ContextMenuTemplate}">
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="RightTapped">
+                            <Behaviors:OpenFlyoutAction />
+                        </Core:EventTriggerBehavior>
+                        <Core:EventTriggerBehavior EventName="Tapped">
+                            <Behaviors:OpenFlyoutAction />
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
                     <TextBlock Text="{Binding Source}" FontWeight="Bold"></TextBlock>
                     <TextBlock Text="{Binding Destination}" FontStyle="Italic"></TextBlock>
                 </StackPanel>
             </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid x:Name="spInner">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            
+
             <TextBlock Grid.Row="0" x:Uid="ApplicationTitleHeader" Text="Dictionary" Style="{StaticResource HeaderTextBlockStyle}" Margin="32, 32, 32, 0" Foreground="#FF8C00"></TextBlock>
             <Grid Margin="32" Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -52,7 +79,8 @@
                     <TextBlock x:Uid="Search" Text="Search:" Foreground="#FF8C00" x:Name="tbSearchText" Margin="0,4,0,0"/>
                     <TextBox x:Name="tbSearch" MinWidth="200" Margin="10,0,0,0"
                         Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        RelativePanel.RightOf="tbSearchText"></TextBox>
+                        RelativePanel.RightOf="tbSearchText"
+                        extensions:FocusExtension.IsFocused="{Binding SearchBoxHasFocus}"></TextBox>
                     <ComboBox MinWidth="200" Margin="10,0,0,0" x:Name="cbLanguageOptions"
                         ItemsSource="{Binding TranslationOptions}" 
                         SelectedItem="{Binding SelectedTranslationOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -73,7 +101,7 @@
                 </GridView>
             </Grid>
         </Grid>
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="WideState">
@@ -101,151 +129,4 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="Hallo Angela!"></TextBlock>
-    </Grid>
-    -->
-    <!--
-    <Page.Resources>
-        <ResourceDictionary>
-            <converters:CopyTextConverter x:Key="copyTextConverter" />
-
-            <DataTemplate x:Key="GridViewDataTemplate">
-                <Grid HorizontalAlignment="Left" Width="400" Tapped="ListView_Tapped" RightTapped="ListView_RightTapped">
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="{Binding DestinationLanguage, Converter={StaticResource copyTextConverter}}" Click="MenuFlyoutItem_Click"/>
-                            <MenuFlyoutItem Text="{Binding SourceLanguage, Converter={StaticResource copyTextConverter}}" Click="MenuFlyoutItem_Click_1"/>
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding DestinationLanguage}" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="20"/>
-                        <TextBlock Text="{Binding SourceLanguage}" Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic" Margin="0,5" FontSize="16"/>
-                    </StackPanel>
-                </Grid>
-            </DataTemplate>
-
-            <DataTemplate x:Key="ListViewDataTemplate">
-                <Grid HorizontalAlignment="Left" Width="280" Tapped="ListView_Tapped" RightTapped="ListView_RightTapped">
-                    <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="{Binding DestinationLanguage, Converter={StaticResource copyTextConverter}}"  Click="MenuFlyoutItem_Click"/>
-                            <MenuFlyoutItem Text="{Binding SourceLanguage, Converter={StaticResource copyTextConverter}}"  Click="MenuFlyoutItem_Click_1"/>
-                        </MenuFlyout>
-                    </FlyoutBase.AttachedFlyout>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding DestinationLanguage}" Style="{StaticResource TitleTextBlockStyle}" FontWeight="Bold" FontSize="20"/>
-                        <TextBlock Text="{Binding SourceLanguage}" Style="{StaticResource SubtitleTextBlockStyle}" FontStyle="Italic" Margin="0,5" FontSize="16"/>
-                    </StackPanel>
-                </Grid>
-            </DataTemplate>
-
-            <converters:NegateBooleanConverter x:Key="NBC"></converters:NegateBooleanConverter>
-            <converters:ReverseBooleanToVisibilityConverter x:Key="RBTVC"></converters:ReverseBooleanToVisibilityConverter>
-            <converters:BooleanToVisibilityConverter x:Key="BTVC"></converters:BooleanToVisibilityConverter>
-        </ResourceDictionary>
-    </Page.Resources>
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Rectangle Visibility="{Binding ElementName=root, Path=HasAvailableLanguages, Converter={StaticResource RBTVC}}" Canvas.ZIndex="100" Opacity="0.1" Fill="Black"></Rectangle>
-        <ProgressRing IsActive="{Binding ElementName=root, Path=HasAvailableLanguages, Converter={StaticResource NBC}}"/>
-        <Grid x:Name="DefaultView">
-            <TextBlock x:Uid="ApplicationTitleHeader" Text="Dictionary" Style="{StaticResource HeaderTextBlockStyle}" Margin="120,60,0,0" Foreground="#FF8C00"></TextBlock>
-            <Grid Margin="120,140,0,50">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <TextBlock x:Uid="Search" Text="Search:" Style="{StaticResource SubheaderTextBlockStyle}" Foreground="#FF8C00"/>
-                        <TextBox x:Name="DefaultViewSearchBox" Margin="10,0,0,0" MinWidth="200" KeyDown="tbSearch_KeyDown"
-                                 Text="{Binding ElementName=root, Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <ComboBox Margin="10,0,0,0" MinWidth="150" 
-                                  ItemsSource="{Binding ElementName=root, Path=LanguageCombinations}" 
-                                  SelectedItem="{Binding ElementName=root, Path=LanguageCombination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  SelectionChanged="cbLanguages_SelectionChanged"></ComboBox>
-                        <Button x:Name="DefaultViewHiddenButton" Opacity="0"></Button>
-                    </StackPanel>
-                    <GridView Grid.Row="1" 
-                              ItemsSource="{Binding ElementName=root, Path=Translations.Words}" 
-                              Padding="0,20,0,0" 
-                              SelectionMode="None" ItemTemplate="{StaticResource GridViewDataTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                    </GridView>
-                    <TextBlock x:Uid="ErrorMessage" Grid.Column="1" Grid.Row="1" Padding="0,20,0,0" Visibility="{Binding ElementName=root, Path=HasError, Converter={StaticResource BTVC}}" TextWrapping="Wrap" Canvas.ZIndex="1" Style="{StaticResource SubheaderTextBlockStyle}"></TextBlock>
-                </Grid>
-            </Grid>
-        </Grid>
-        <Grid x:Name="SmallView" Visibility="Collapsed">
-            <TextBlock x:Uid="ApplicationTitleHeader" Text="Dictionary" Style="{StaticResource HeaderTextBlockStyle}" Margin="20,20,0,0" Foreground="#FF8C00" FontSize="26.667"></TextBlock>
-            <Grid Margin="20,80,0,20">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Uid="Search" Grid.Column="0" Grid.Row="0" Text="Search:" Style="{StaticResource SubheaderTextBlockStyle}" Foreground="#FF8C00" FontSize="21.333"/>
-                        <TextBox Grid.Column="1" Grid.Row="0" x:Name="SmallViewSearchBox" Margin="10,0,0,0" MinWidth="150" KeyDown="tbSearch_KeyDown"
-                                 Text="{Binding ElementName=root, Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <ComboBox Grid.Row="1" Grid.Column="1" MinWidth="150" Margin="10,5,0,0"
-                                  ItemsSource="{Binding ElementName=root, Path=LanguageCombinations}" 
-                                  SelectedItem="{Binding ElementName=root, Path=LanguageCombination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  SelectionChanged="cbLanguages_SelectionChanged"></ComboBox>
-                        <Button Grid.Column="2" Grid.Row="0" x:Name="SimpleViewHiddenButton" Opacity="0"></Button>
-                    </Grid>
-                    <ListView Grid.Row="2" 
-                              ItemsSource="{Binding ElementName=root, Path=Translations.Words}" 
-                              Padding="0,10,0,0" 
-                              SelectionMode="None" ItemTemplate="{StaticResource ListViewDataTemplate}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                    </ListView>
-                    <TextBlock x:Uid="ErrorMessage" Grid.Row="2" Padding="0,10,0,0" Visibility="{Binding ElementName=root, Path=HasError, Converter={StaticResource BTVC}}" TextWrapping="Wrap" Canvas.ZIndex="1" Style="{StaticResource SubheaderTextBlockStyle}"></TextBlock>
-                </Grid>
-            </Grid>
-        </Grid>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="DefaultLayout">
-                </VisualState>
-                <VisualState x:Name="SmallLayout">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SmallView" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DefaultView" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-    </Grid>
-    -->
 </Page>
