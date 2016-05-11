@@ -1,6 +1,8 @@
 # Easy Dictionary (Windows 10 (UWP) App)
 Windows Store: [https://www.microsoft.com/store/apps/9nblgggz62rk](https://www.microsoft.com/store/apps/9nblgggz62rk)
 
+<img src="https://raw.githubusercontent.com/marcobusemann/easydictionary/master/Screenshots/translation.png" height="400">
+
 # Introduction
 This app povides simple word translations using the well known service [http://dict.cc](http://dict.cc).  The app is held clean and simple to just serve this one feature.
 
@@ -19,7 +21,7 @@ The app has been created using:
 - Microsoft Visual Studio Community 2015
   - Version 14.0.25123.00 Update 2
 
-- Visual Studio Tools f�r Universelle Windows-Apps 14.0.25208.00
+- Visual Studio Tools for Universelle Windows-Apps 14.0.25208.00
 
 # ThirdParty
 - Navigation: [SplitViewMenu](https://github.com/deanchalk/SplitViewMenuUWP/tree/master/SplitViewMenuUWP)
