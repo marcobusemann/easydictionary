@@ -138,9 +138,7 @@ Diese App ist open-source, wodurch Entwickler selbst neue Features oder Verbesse
     <value>Nutzungsbedingungen</value>
   </data>
   <data name="ApplicationDescription" xml:space="preserve">
-    <value>Diese App ermöglicht eine einfache Wort-Übersetzung über den bekannten Dienst http://dict.cc. Durch ein einfaches Design und klare Bedienung fokussiert sie sich auf diese eine Aufgabe. 
-
-Diese App ist open-source, wodurch Entwickler selbst neue Features oder Verbesserungen hinzufügen können.</value>
+    <value>Diese App ermöglicht eine einfache Wort-Übersetzung über den bekannten Dienst http://dict.cc. Durch ein einfaches Design und klare Bedienung fokussiert sie sich auf diese eine Aufgabe. Diese App ist open-source, wodurch Entwickler selbst neue Features oder Verbesserungen hinzufügen können.</value>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Easy Dictionary</value>
